@@ -22,6 +22,9 @@ npm run build      # static output in dist/
 - `src/assets/properties/<slug>/` — `card.jpg` is the cover; `gallery-*.jpg` files are picked
   up automatically on the property page.
 - `src/styles/global.css` — the design system (colors, type, buttons, cards).
+- `brand/` — the graphics brand kit: [BRAND.md](brand/BRAND.md) documents the identity,
+  `ja_graphics.mjs` is an SVG→PNG render library sharing the site's tokens, and
+  `node brand/share-card.mjs` regenerates the social share card (`public/og.png`).
 
 ## Deploy (GitHub Pages)
 

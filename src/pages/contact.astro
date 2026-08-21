@@ -3,6 +3,9 @@ import Base from '../layouts/Base.astro';
 import SocialIcons from '../components/SocialIcons.astro';
 import SubscribeBand from '../components/SubscribeBand.astro';
 import { SITE, LINKS, FORM_ENDPOINT, href } from '../config';
+
+/** Calendly inline embed, themed to match the site (hex values without '#'). */
+const calendlyEmbedUrl = `${LINKS.calendly}?hide_gdpr_banner=1&background_color=121722&text_color=f2eee5&primary_color=d8b36a`;
 ---
 
 <Base title="Contact | Joseph Alvarado Real Estate Agent and Investor">
@@ -67,9 +70,7 @@ import { SITE, LINKS, FORM_ENDPOINT, href } from '../config';
         </div>
         <div class="info-block">
           <h3>Prefer to talk?</h3>
-          <a class="btn btn-ghost" href={LINKS.calendly} target="_blank" rel="noopener">
-            Book a Free 30-min Call
-          </a>
+          <a class="btn btn-ghost" href="#book">Book a Free 30-min Call</a>
         </div>
         <div class="info-block">
           <h3>Socials</h3>
@@ -78,6 +79,27 @@ import { SITE, LINKS, FORM_ENDPOINT, href } from '../config';
       </aside>
     </div>
   </section>
+
+  <section class="section" id="book" style="padding-top: 0;">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Prefer to talk?</span>
+        <h2>Book a free 30-minute call</h2>
+        <p class="lede">
+          Pick a time that works for you and we'll talk through your goals — no pressure, no
+          obligation.
+        </p>
+      </div>
+      <div class="calendly-card">
+        <div class="calendly-inline-widget" data-url={calendlyEmbedUrl}></div>
+      </div>
+      <p class="calendly-fallback">
+        Widget not loading?
+        <a href={LINKS.calendly} target="_blank" rel="noopener">Open the scheduler directly &rarr;</a>
+      </p>
+    </div>
+  </section>
+  <script is:inline src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
   <SubscribeBand />
 </Base>
@@ -159,6 +181,34 @@ import { SITE, LINKS, FORM_ENDPOINT, href } from '../config';
 
   .info-block p {
     color: var(--text);
+  }
+
+  .calendly-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .calendly-inline-widget {
+    width: 100%;
+    min-width: 320px;
+    height: 700px;
+  }
+
+  .calendly-fallback {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .calendly-fallback a {
+    color: var(--gold);
+  }
+
+  .calendly-fallback a:hover {
+    color: var(--gold-bright);
   }
 
   @media (max-width: 860px) {
