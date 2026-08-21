@@ -1,0 +1,41 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build with Astro
+        uses: withastro/action@v3
+        env:
+          # These two lines make the site work at https://<user>.github.io/<repo>/.
+          # Once the custom domain (agentjoea.com) is connected in the repo's
+          # Pages settings, DELETE both lines so the site builds for the root domain.
+          DEPLOY_BASE: /${{ github.event.repository.name }}
+          DEPLOY_SITE: https://${{ github.repository_owner }}.github.io
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

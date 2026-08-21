@@ -1,0 +1,230 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
+import portrait from '../assets/brand/portrait.png';
+import joeFamily from '../assets/about/joe-family.jpg';
+import joeKids from '../assets/about/joe-kids.jpg';
+
+import richDad from '../assets/books/rich-dad-poor-dad.jpg';
+import alchemist from '../assets/books/the-alchemist.jpg';
+import psychology from '../assets/books/psychology-of-money.jpg';
+import multifamily from '../assets/books/multifamily-millionaire.jpg';
+import millionaireAgent from '../assets/books/millionaire-real-estate-agent.jpg';
+import fiveAm from '../assets/books/5am-club.webp';
+import cashflow from '../assets/books/cashflow-quadrant.jpg';
+
+const books = [
+  {
+    img: richDad,
+    alt: 'Rich Dad Poor Dad cover',
+    text: 'Reading "Rich Dad Poor Dad" gave me a new perspective on finances and investing, which helped me make smarter decisions in my real estate career. The book taught me the importance of creating passive income streams and seizing opportunities to build wealth — how to make money work for me, instead of me working for money.',
+  },
+  {
+    img: alchemist,
+    alt: 'The Alchemist cover',
+    text: '"The Alchemist" is a book that has been a game-changer for me. It follows the journey of a young shepherd boy who sets out to find his personal legend, or his purpose in life. The book teaches us about the importance of following our dreams and having faith in our journey. It has helped me to stay true to my passions and focus on my goals.',
+  },
+  {
+    img: psychology,
+    alt: 'Psychology of Money by Morgan Housel',
+    text: '"Psychology of Money" is a book I highly recommend. It\'s an excellent resource for anyone looking to improve their financial literacy. The book explains how our beliefs about money influence our financial decisions.',
+  },
+  {
+    img: multifamily,
+    alt: 'The Multifamily Millionaire',
+    text: 'The BiggerPockets portfolio of books and podcasts have been my single most source of inspiration and education! These books have been extremely helpful in terms of practical advice on real estate investing, especially for newbies — from rental property investing to flipping houses to creative financing strategies. I highly recommend!',
+  },
+  {
+    img: millionaireAgent,
+    alt: 'The Millionaire Real Estate Agent',
+    text: '"The Millionaire Real Estate Agent" provided me with a roadmap to build processes to become a successful real estate agent.',
+  },
+  {
+    img: fiveAm,
+    alt: 'The 5am Club by Robin Sharma',
+    text: 'Another book that has had a significant impact on me is "5am Club." This book is all about waking up early and using the extra time to focus on your goals. By waking up early and dedicating time to work on my real estate career, I\'ve been able to make significant progress and stay motivated.',
+  },
+  {
+    img: cashflow,
+    alt: "Rich Dad's Cashflow Quadrant",
+    text: '"Cash Flow Quadrant" taught me about the importance of passive income and how to move from being an employee or self-employed to a business owner or investor.',
+  },
+];
+---
+
+<Base title="About Me | Joseph Alvarado Real Estate Agent and Investor">
+  <section class="section page-hero">
+    <div class="container">
+      <span class="kicker">About Joseph</span>
+      <h1>Chicago born & raised</h1>
+      <p class="lede">
+        I now call the Western suburbs home, sharing my life with my growing family. God is
+        Good!
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container split">
+      <div class="photo">
+        <Image src={portrait} alt="Joseph Alvarado" width={640} />
+      </div>
+      <div>
+        <h2>Joseph E. Alvarado</h2>
+        <hr class="divider-gold" />
+        <p>
+          Real estate runs in my veins! Growing up, my mom was a real estate agent, and my dad
+          worked in construction, constantly renovating our homes. Now, I'm settled in the West
+          suburbs with my wife and our babies, and they've been by my side through it all.
+        </p>
+        <p>
+          My journey in property investment began four years ago, and I haven't looked back
+          since. Over this time, I've acquired and managed more than 10 properties (9 in
+          Illinois!), ranging from quick flips to long-term rentals. In addition to my
+          investments, I proudly launched "Alvarado Investments" — my own real estate
+          investment company.
+        </p>
+        <p>
+          I'm dedicated to transforming eyesores into properties that communities can take
+          pride in. Real estate is not just a business for me; it's a means to empower my
+          family's financial independence and uplift the neighborhoods I work in.
+        </p>
+        <p>
+          When I'm not immersed in the world of real estate, you'll find me hanging out with my
+          family, pursuing my fitness goals through weightlifting and Muay Thai training,
+          giving die-hard support to my Chicago sports teams, attending Notre Dame football
+          games, and enjoying nature.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split reverse">
+      <div class="photo-stack">
+        <Image src={joeFamily} alt="A photo of Joe and his wife" width={560} />
+        <Image src={joeKids} alt="Joe and his kids" width={560} />
+      </div>
+      <div>
+        <span class="kicker">Family oriented</span>
+        <h2>Built on family values & faith</h2>
+        <hr class="divider-gold" />
+        <p>
+          My success as a real estate broker is built on my strong foundation of family values
+          and faith. As a devout Catholic, I understand the importance of honesty, integrity,
+          and treating others with respect. I bring these values to my work every day, ensuring
+          that my clients receive the highest level of service and support. My dedication to my
+          family and faith is reflected in my commitment to my clients.
+        </p>
+        <p>
+          If you ever see me in the neighborhood with my wife and my kiddos draped all over me,
+          don't hesitate to say hello :)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">How I got started on my journey</span>
+        <h2>Books that shaped the way I invest</h2>
+      </div>
+      <div class="books">
+        {books.map((b) => (
+          <div class="card book-card">
+            <div class="book-cover">
+              <Image src={b.img} alt={b.alt} width={220} />
+            </div>
+            <p>{b.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Let's get the conversation started"
+    text="I'll answer any of your questions — free of charge!"
+  />
+  <SubscribeBand />
+</Base>
+
+<style>
+  .page-hero {
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: minmax(280px, 420px) 1fr;
+    gap: clamp(2rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+
+  .split.reverse {
+    grid-template-columns: 1fr minmax(280px, 460px);
+  }
+
+  .split.reverse .photo-stack {
+    order: -1;
+  }
+
+  .photo :global(img),
+  .photo-stack :global(img) {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+  }
+
+  .photo-stack {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .split p + p {
+    margin-top: 1rem;
+  }
+
+  .books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .book-card {
+    padding: 1.6rem;
+  }
+
+  .book-card .book-cover {
+    height: 190px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+
+  .book-card .book-cover :global(img) {
+    max-height: 190px;
+    width: auto;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+
+  .book-card p {
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+
+  @media (max-width: 860px) {
+    .split,
+    .split.reverse {
+      grid-template-columns: 1fr;
+    }
+
+    .photo,
+    .photo-stack {
+      max-width: 440px;
+    }
+  }
+</style>

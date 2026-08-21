@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo.webp';
+import brokersLogo from '../assets/brand/brokers-logo.png';
+import SocialIcons from './SocialIcons.astro';
+import { SITE, LINKS, href } from '../config';
+
+const year = new Date().getFullYear();
+
+const explore = [
+  { label: 'About', path: '/about/' },
+  { label: 'Buyers', path: '/buying/' },
+  { label: 'Sellers', path: '/selling/' },
+  { label: 'Investments', path: '/investing/' },
+  { label: 'Properties', path: '/properties/' },
+  { label: 'Blog', path: '/blog/' },
+  { label: 'Contact', path: '/contact/' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <Image src={logo} alt="Joseph Alvarado logo" width={120} densities={[1, 2]} />
+      <p>
+        Realtor & investor serving Winfield, Wheaton, West Chicago and the Western suburbs of
+        Chicago. Let's turn your real estate goals into reality.
+      </p>
+      <a class="powered" href={LINKS.brokerage} target="_blank" rel="noopener">
+        <span>Powered by</span>
+        <Image src={brokersLogo} alt="Chicagoland Brokers" width={150} densities={[1, 2]} />
+      </a>
+    </div>
+
+    <nav class="footer-col" aria-label="Footer">
+      <h3>Explore</h3>
+      <ul>
+        {explore.map((item) => (
+          <li><a href={href(item.path)}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="footer-col">
+      <h3>Contact</h3>
+      <ul>
+        <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+        <li><a href={SITE.phoneHref}>{SITE.phone}</a></li>
+        <li><span class="plain">{SITE.office}</span></li>
+        <li>
+          <a href={LINKS.calendly} target="_blank" rel="noopener">Schedule a free call →</a>
+        </li>
+      </ul>
+      <div class="footer-socials">
+        <SocialIcons size={18} />
+      </div>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {year} {SITE.company} | All rights reserved.</p>
+    <div class="legal">
+      <a href={href('/privacy-policy/')}>Privacy Policy</a>
+      <a href={LINKS.fairHousing} target="_blank" rel="noopener">Fair Housing Policy</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+    margin-top: auto;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .footer-brand p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 1.2rem 0 1.6rem;
+    max-width: 30rem;
+  }
+
+  .powered {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .powered span {
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .powered img {
+    filter: brightness(1.35);
+  }
+
+  .footer-col h3 {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.1rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .footer-col a,
+  .footer-col .plain {
+    color: var(--text);
+    font-size: 0.95rem;
+  }
+
+  .footer-col a:hover {
+    color: var(--gold-bright);
+  }
+
+  .footer-socials {
+    margin-top: 1.4rem;
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    border-top: 1px solid var(--line);
+    padding-block: 1.4rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .legal {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .legal a {
+    color: var(--muted);
+  }
+
+  .legal a:hover {
+    color: var(--gold);
+  }
+
+  @media (max-width: 800px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

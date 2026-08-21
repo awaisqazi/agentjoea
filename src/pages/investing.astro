@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
+
+const reasons = [
+  {
+    title: 'Get immediate cash',
+    text: 'Monthly positive cash flow from rents.',
+  },
+  {
+    title: 'Increase your long-term net worth',
+    text: 'Properties that earn immediate sweat equity and appreciate over time.',
+  },
+  {
+    title: 'Get your money back to reinvest',
+    text: 'Work with lenders to refinance improved properties and get your down payment back.',
+  },
+  {
+    title: 'Huge network of Chicagoland contractors',
+    text: 'Leverage my network to make improvements on your property.',
+  },
+  {
+    title: 'Find and manage the ideal tenants',
+    text: 'I can hold your hand and help you manage tenants.',
+  },
+  {
+    title: 'Deal hunting',
+    text: 'Off-market listings, MLS auctions, and tax-delinquent sites to land you the perfect deal.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'How much are the consultation fees?',
+    a: ['All consultations, discussions, and advice are free of charge.'],
+  },
+  {
+    q: 'What services are offered above and beyond others?',
+    a: [
+      'Chicagoland and Northern Illinois market expertise (born and raised here, and I invest here!).',
+      "Investor's knowledge at your disposal — get the best deals at the best price.",
+      'I know how to find deals without breaking your wallet. I leverage the BRRRR method and it has worked wonders! I can help "average Joes" with no experience find amazing deals that will help you on your path to financial freedom!',
+      'Wide network of banks/lenders to help with your financing questions (low credit score, low income — NO problem!).',
+      'Wide network of contractors that can assist in any renovations at great prices!',
+      "24/7 communication — you can call, email, or text me at any time and I'll provide an immediate response.",
+    ],
+  },
+  {
+    q: 'How long will the process take?',
+    a: [
+      "This varies depending on what type of property you purchase. We could estimate that to purchase a single-family home investment would take 60 days. Light rehabs could take 1–3 months. More extensive rehabs will take longer. But don't worry, I will hold your hand every step of the way.",
+    ],
+  },
+  {
+    q: 'How much money do I need saved up?',
+    a: [
+      'I have a wide network of banks/lenders to help with your financing questions (low credit score, low income — NO problem!). You and I will work together with a top lender to understand your price point.',
+      'With degrees and experience in Finance and Corporate Finance, I can assist in proper budgeting and financial planning to determine your property purchase budget.',
+    ],
+  },
+  {
+    q: 'How do I manage contractors?',
+    a: [
+      "This is where I shine! I can guide you and assist with the project management of contractor work. Don't worry — I got you!",
+    ],
+  },
+  {
+    q: 'How do I manage the property/tenants when renovations are complete?',
+    a: [
+      'I also offer property management services. I can assist overseeing and managing your tenants without you breaking a sweat!',
+    ],
+  },
+];
+---
+
+<Base title="Investing | Joseph Alvarado Real Estate Agent and Investor">
+  <section class="section page-hero">
+    <div class="container">
+      <span class="kicker">Investments</span>
+      <h1>Investing made <em>easy</em></h1>
+      <p class="lede">
+        Thinking about purchasing your first investment property? Interested in making passive
+        income? I specialize in helping new investors make the most from their properties!
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Reasons to invest with me</span>
+        <h2>From first deal to full portfolio</h2>
+      </div>
+      <div class="grid-3">
+        {reasons.map((r, i) => (
+          <div class="card reason">
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{r.title}</h3>
+            <p>{r.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-layout">
+      <div class="section-head">
+        <span class="kicker">Investor FAQs</span>
+        <h2>Questions, answered</h2>
+        <p class="lede">
+          I can help you navigate the market and find properties that will provide long-term
+          returns on your investment.
+        </p>
+      </div>
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand text="Don't hesitate to reach out! All consultations, discussions, and advice are free of charge." />
+  <SubscribeBand />
+</Base>
+
+<style>
+  .page-hero {
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .page-hero h1 em {
+    color: var(--gold-bright);
+  }
+
+  .reason {
+    padding: 1.8rem 1.7rem;
+  }
+
+  .reason .num {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .reason p {
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 1.4fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .faq-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

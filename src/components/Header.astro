@@ -1,0 +1,147 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo.webp';
+import { LINKS, href } from '../config';
+
+const nav = [
+  { label: 'About', path: '/about/' },
+  { label: 'Buyers', path: '/buying/' },
+  { label: 'Sellers', path: '/selling/' },
+  { label: 'Investments', path: '/investing/' },
+  { label: 'Properties', path: '/properties/' },
+  { label: 'Blog', path: '/blog/' },
+];
+
+const current = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={href('/')} aria-label="Joseph Alvarado — home">
+      <Image src={logo} alt="Joseph Alvarado logo" width={96} densities={[1, 2]} loading="eager" />
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      {nav.map((item) => (
+        <a href={href(item.path)} aria-current={current.endsWith(item.path) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+      <a class="btn btn-gold nav-cta" href={LINKS.calendly} target="_blank" rel="noopener">
+        Book a Call
+      </a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(!!open));
+    document.body.classList.toggle('nav-open', !!open);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(11, 14, 19, 0.86);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 76px;
+  }
+
+  .brand img {
+    width: 96px;
+    height: auto;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.9rem;
+  }
+
+  .site-nav a:not(.nav-cta) {
+    color: var(--text);
+    font-size: 0.95rem;
+    font-weight: 550;
+    letter-spacing: 0.02em;
+    padding-block: 0.4rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .site-nav a:not(.nav-cta):hover,
+  .site-nav a[aria-current='page'] {
+    color: var(--gold-bright);
+    border-bottom-color: var(--gold);
+  }
+
+  .nav-cta {
+    padding: 0.6rem 1.4rem;
+    font-size: 0.88rem;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: 0;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .nav-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  @media (max-width: 900px) {
+    .nav-toggle { display: flex; }
+
+    .site-nav {
+      position: fixed;
+      inset: 76px 0 auto 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+      padding: 0.5rem 1.5rem 1.5rem;
+      display: none;
+    }
+
+    .site-nav.open { display: flex; }
+
+    .site-nav a:not(.nav-cta) {
+      padding: 0.9rem 0.25rem;
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-cta {
+      margin-top: 1.2rem;
+      justify-content: center;
+    }
+  }
+</style>

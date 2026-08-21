@@ -1,0 +1,88 @@
+---
+import { FORM_ENDPOINT, SITE, href } from '../config';
+---
+
+<section class="section subscribe-band">
+  <div class="container inner">
+    <div>
+      <span class="kicker">Not ready to connect just yet?</span>
+      <h2>Keep up to date with Joe's progress and blog</h2>
+    </div>
+    <form
+      class="subscribe-form"
+      method="POST"
+      action={FORM_ENDPOINT || undefined}
+      data-fallback-email={SITE.email}
+      data-fallback-subject="Subscribe me to your updates"
+    >
+      <input type="email" name="email" placeholder="Enter your email" required aria-label="Email address" />
+      <button class="btn btn-gold" type="submit">Subscribe</button>
+    </form>
+  </div>
+  <p class="container fine">
+    By subscribing you agree to our <a href={href('/privacy-policy/')}>Privacy Policy</a>.
+  </p>
+</section>
+
+<script>
+  // With no form backend configured, fall back to the visitor's email app.
+  for (const form of document.querySelectorAll<HTMLFormElement>('form[data-fallback-email]')) {
+    if (form.getAttribute('action')) continue;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = form.dataset.fallbackEmail;
+      const subject = encodeURIComponent(form.dataset.fallbackSubject ?? 'Website inquiry');
+      const body = encodeURIComponent(
+        [...new FormData(form).entries()].map(([k, v]) => `${k}: ${v}`).join('\n')
+      );
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    });
+  }
+</script>
+
+<style>
+  .subscribe-band {
+    border-top: 1px solid var(--line);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .inner h2 {
+    max-width: 30rem;
+  }
+
+  .subscribe-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    min-width: min(420px, 100%);
+  }
+
+  .subscribe-form input {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.85rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 1rem;
+  }
+
+  .subscribe-form input:focus {
+    outline: 2px solid var(--gold-dim);
+    border-color: var(--gold);
+  }
+
+  .fine {
+    margin-top: 1.2rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+</style>

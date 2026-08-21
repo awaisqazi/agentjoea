@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import SubscribeBand from '../../components/SubscribeBand.astro';
+
+const properties = (await getCollection('properties')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Base title="Properties | Joseph Alvarado Real Estate Agent and Investor">
+  <section class="section page-hero">
+    <div class="container">
+      <span class="kicker">My properties</span>
+      <h1>Joe's Properties</h1>
+      <p class="lede">Check out my flipping and rental project showcase below.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="grid-3">
+        {properties.map((p, i) => (
+          <PropertyCard entry={p} loading={i < 3 ? 'eager' : 'lazy'} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Want results like these?"
+    text="Whether you're buying, selling, or investing — let's talk through what's possible for you."
+  />
+  <SubscribeBand />
+</Base>
+
+<style>
+  .page-hero {
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+</style>

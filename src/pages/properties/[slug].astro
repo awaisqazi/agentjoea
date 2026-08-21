@@ -1,0 +1,207 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Base from '../../layouts/Base.astro';
+import PropertyCard from '../../components/PropertyCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+export async function getStaticPaths() {
+  const properties = await getCollection('properties');
+  return properties.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'properties'>;
+}
+
+const { entry } = Astro.props;
+const { title, summary, tag, beds, baths, propertyType, buyPrice, soldPrice, card } = entry.data;
+const { Content } = await render(entry);
+
+const galleryModules = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/assets/properties/*/gallery-*.{jpg,jpeg,png,webp}',
+  { eager: true }
+);
+const gallery = Object.entries(galleryModules)
+  .filter(([path]) => path.includes(`/properties/${entry.id}/`))
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, mod]) => mod.default);
+
+const others = (await getCollection('properties'))
+  .filter((p) => p.id !== entry.id)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const money = (n: number) => `$${n.toLocaleString('en-US')}`;
+---
+
+<Base title={`${title} | Joe's Properties`} description={`${title} — ${summary}`}>
+  <section class="detail-hero">
+    <Image src={card} alt={`${title} exterior`} class="detail-bg" width={1920} loading="eager" quality={72} />
+    <div class="container detail-hero-inner">
+      <span class="badge">{tag}</span>
+      <h1>{title}</h1>
+      <p class="lede">{summary}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <div class="stat-strip card">
+        <div><span class="stat-number">{beds}</span><p>Bedroom{beds === 1 ? '' : 's'}</p></div>
+        <div><span class="stat-number">{baths}</span><p>Bathroom{baths === 1 ? '' : 's'}</p></div>
+        <div class="wide"><span class="stat-label">{propertyType}</span><p>Property Type</p></div>
+        <div><span class="stat-number">{money(buyPrice)}</span><p>Buying Price</p></div>
+        <div><span class="stat-number gold">{money(soldPrice)}</span><p>Sold / Current Price</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container detail-layout">
+      <article class="prose">
+        <span class="kicker">Property details</span>
+        <Content />
+      </article>
+
+      {gallery.length > 0 && (
+        <aside>
+          <span class="kicker">Property gallery</span>
+          <div class="gallery">
+            {gallery.map((img, i) => (
+              <Image
+                src={img}
+                alt={`${title} — photo ${i + 1}`}
+                width={640}
+                loading={i < 2 ? 'eager' : 'lazy'}
+              />
+            ))}
+          </div>
+        </aside>
+      )}
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">More properties</span>
+        <h2>Keep exploring my work</h2>
+      </div>
+      <div class="grid-3">
+        {others.map((p) => (
+          <PropertyCard entry={p} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Want results like these?"
+    text="Whether you're buying, selling, or investing — let's talk through what's possible for you."
+  />
+</Base>
+
+<style>
+  .detail-hero {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .detail-hero :global(.detail-bg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .detail-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 14, 19, 0.2), rgba(11, 14, 19, 0.94) 92%);
+  }
+
+  .detail-hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-block: 3.5rem;
+    width: 100%;
+  }
+
+  .detail-hero-inner h1 {
+    margin-top: 1rem;
+  }
+
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    padding: 1.8rem 2rem;
+  }
+
+  .stat-strip p {
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+
+  .stat-label {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    color: var(--text);
+    line-height: 1.2;
+    display: block;
+    padding-top: 0.5rem;
+  }
+
+  .stat-number.gold {
+    color: var(--gold);
+  }
+
+  .detail-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .gallery :global(img) {
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gallery :global(img:first-child) {
+    grid-column: span 2;
+    aspect-ratio: 16 / 10;
+  }
+
+  @media (max-width: 900px) {
+    .detail-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

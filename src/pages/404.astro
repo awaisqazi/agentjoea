@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../config';
+---
+
+<Base title="Page Not Found | Joseph Alvarado">
+  <section class="section nf">
+    <div class="container">
+      <span class="kicker">404</span>
+      <h1>This listing has moved</h1>
+      <p class="lede">
+        The page you're looking for doesn't exist — but there's plenty more to explore.
+      </p>
+      <div class="actions">
+        <a class="btn btn-gold" href={href('/')}>Back Home</a>
+        <a class="btn btn-ghost" href={href('/properties/')}>View Properties</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    min-height: 55vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+</style>

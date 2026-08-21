@@ -1,0 +1,361 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import PostCard from '../components/PostCard.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
+import { SITE, LINKS, href } from '../config';
+import hero from '../assets/brand/hero.jpg';
+import portrait from '../assets/brand/portrait.png';
+import brokersLogo from '../assets/brand/brokers-logo.png';
+
+const properties = (await getCollection('properties')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const services = [
+  {
+    title: "What's My Home Worth?",
+    text: 'Get a free comprehensive home value report in minutes.',
+    href: LINKS.homeValue,
+    external: true,
+  },
+  {
+    title: 'Buy a Home',
+    text: 'Fast viewings, strong offers, and investor-grade negotiating.',
+    href: href('/buying/'),
+    external: false,
+  },
+  {
+    title: 'Sell Your Home',
+    text: 'Sell faster and for more with my contractor network and pricing strategy.',
+    href: href('/selling/'),
+    external: false,
+  },
+  {
+    title: 'Invest with Me',
+    text: 'Cash-flowing rentals, flips, and the BRRRR method — made easy.',
+    href: href('/investing/'),
+    external: false,
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "Joseph is the best! When I reached out to him he quickly assesed what I was looking for. Despite this crazy market I found my dream home! Thank you Joseph!",
+    name: 'Alexis, Buyer',
+  },
+  {
+    quote:
+      "Joseph was so east to work with! He helped me find my first place after faield attempts of seaching for places on my own, invest your time with a real estate agent like Joseph you won't regret it!",
+    name: 'Maria, Buyer',
+  },
+  {
+    quote:
+      "It has always been a pleasure working with Joseph. He amazes me with his dedication to his craft and his attention to detail. He works diligently and in a very timely manner. And he's not afraid to ask questions nor seek out the solutions to any programs. I highly recommend!",
+    name: 'Whitney, Lender',
+  },
+];
+---
+
+<Base>
+  <!-- ============ hero ============ -->
+  <section class="hero">
+    <Image src={hero} alt="" class="hero-bg" width={1920} loading="eager" quality={70} />
+    <div class="container hero-inner">
+      <span class="kicker">Realtor with Chicagoland Brokers · Investor</span>
+      <h1>Joseph Alvarado</h1>
+      <p class="hero-sub">
+        Winfield, Wheaton, West Chicago & the Chicago suburbs. Specializing in the Western
+        suburbs of Chicago — let's work together to turn your real estate goals into reality.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href={LINKS.calendly} target="_blank" rel="noopener">Book a Call</a>
+        <a class="btn btn-ghost" href={LINKS.homeValue} target="_blank" rel="noopener">
+          What's My Home Worth?
+        </a>
+      </div>
+      <a class="hero-powered" href={LINKS.brokerage} target="_blank" rel="noopener">
+        <span>Powered by</span>
+        <Image src={brokersLogo} alt="Chicagoland Brokers" width={170} densities={[1, 2]} loading="eager" />
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ services ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">How can I help?</span>
+        <h2>Real estate, made easier for you</h2>
+      </div>
+      <div class="grid-2 services">
+        {services.map((s) => (
+          <a
+            class="card service-card"
+            href={s.href}
+            target={s.external ? '_blank' : undefined}
+            rel={s.external ? 'noopener' : undefined}
+          >
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <span class="view">{s.external ? 'Get started ↗' : 'Learn more →'}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ about teaser ============ -->
+  <section class="section section-alt">
+    <div class="container about-teaser">
+      <div class="about-photo">
+        <Image src={portrait} alt="Joseph Alvarado" width={640} />
+      </div>
+      <div>
+        <span class="kicker">Get to know Joseph Alvarado</span>
+        <h2>I make real estate <em>easier</em> for you</h2>
+        <hr class="divider-gold" />
+        <p>
+          Hey there, I'm Joe, your trusted real estate agent serving the greater Chicagoland
+          area. With deep roots in Chicago and a background in Finance, including a Bachelors
+          and MBA from UIUC & Notre Dame, I bring unparalleled expertise to the table.
+        </p>
+        <p>
+          As a real estate investor myself, I have the insights to guide you in making the best
+          decisions. Whether you're a first-time buyer, a seasoned pro, or selling your
+          property, I'm here to support you every step of the way. My dedication to your
+          success ensures a seamless real estate experience. Reach out anytime for all your
+          real estate needs.
+        </p>
+        <a class="btn btn-ghost" href={href('/about/')}>More About Me</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ properties ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">My properties</span>
+        <h2>Flips, rentals & everything in between</h2>
+        <p class="lede">
+          I don't just talk real estate — I invest in it. Check out my flipping and rental
+          project showcase.
+        </p>
+      </div>
+      <div class="grid-3">
+        {properties.map((p) => (
+          <PropertyCard entry={p} />
+        ))}
+      </div>
+      <div class="center-cta">
+        <a class="btn btn-gold" href={href('/properties/')}>View More of My Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ testimonials ============ -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head center">
+        <span class="kicker">Testimonials</span>
+        <h2>What clients are saying</h2>
+      </div>
+      <div class="grid-3">
+        {testimonials.map((t) => (
+          <figure class="card quote-card">
+            <div class="quote-mark">“</div>
+            <blockquote>{t.quote}</blockquote>
+            <figcaption>{t.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ blog ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">My thoughts</span>
+        <h2>Latest from the blog</h2>
+      </div>
+      <div class="grid-3">
+        {posts.map((post) => (
+          <PostCard entry={post} />
+        ))}
+      </div>
+      <div class="center-cta">
+        <a class="btn btn-ghost" href={href('/blog/')}>All Posts</a>
+      </div>
+    </div>
+  </section>
+
+  <SubscribeBand />
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(88vh, 780px);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero :global(.hero-bg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 65%;
+    opacity: 0.38;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(11, 14, 19, 0.25), rgba(11, 14, 19, 0.92) 88%),
+      radial-gradient(ellipse 70% 90% at 20% 60%, rgba(11, 14, 19, 0.55), transparent);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding-block: 6rem;
+    max-width: none;
+  }
+
+  .hero h1 {
+    max-width: 14ch;
+  }
+
+  .hero-sub {
+    max-width: 36rem;
+    color: var(--muted);
+    font-size: 1.15rem;
+    margin-top: 1.3rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.2rem;
+  }
+
+  .hero-powered {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 3.2rem;
+  }
+
+  .hero-powered span {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero-powered img {
+    filter: brightness(1.4);
+  }
+
+  .services .service-card {
+    display: block;
+    padding: 1.8rem 1.7rem;
+    color: var(--text);
+  }
+
+  .service-card h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .service-card p {
+    color: var(--muted);
+    font-size: 0.97rem;
+    margin-bottom: 1rem;
+  }
+
+  .service-card .view {
+    color: var(--gold);
+    font-weight: 650;
+    font-size: 0.9rem;
+  }
+
+  .about-teaser {
+    display: grid;
+    grid-template-columns: minmax(280px, 420px) 1fr;
+    gap: clamp(2rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+
+  .about-photo :global(img) {
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+  }
+
+  .about-teaser h2 em {
+    color: var(--gold-bright);
+    font-style: italic;
+  }
+
+  .about-teaser p + p {
+    margin-top: 1rem;
+  }
+
+  .about-teaser .btn {
+    margin-top: 1.8rem;
+  }
+
+  .center-cta {
+    text-align: center;
+    margin-top: 2.8rem;
+  }
+
+  .quote-card {
+    padding: 1.8rem 1.7rem;
+  }
+
+  .quote-mark {
+    font-family: var(--serif);
+    font-size: 3.2rem;
+    line-height: 0.6;
+    color: var(--gold);
+    margin-bottom: 0.9rem;
+  }
+
+  .quote-card blockquote {
+    color: var(--text);
+    font-size: 0.98rem;
+  }
+
+  .quote-card figcaption {
+    margin-top: 1.1rem;
+    color: var(--gold-bright);
+    font-weight: 650;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 860px) {
+    .about-teaser {
+      grid-template-columns: 1fr;
+    }
+
+    .about-photo {
+      max-width: 420px;
+    }
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
+import { LINKS } from '../config';
+
+const stats = [
+  { number: '+3%', label: 'Sales-to-listing price vs the average agent in Northern Illinois' },
+  { number: '24 days', label: 'Faster sales vs the average agent in Northern Illinois' },
+  { number: '10K+', label: "Buyers waiting in our team's client database" },
+  { number: '+10%', label: "Listing price gains from Joe's contractor network & eye for value" },
+];
+
+const faqs = [
+  {
+    q: 'Is there a consultation fee?',
+    a: ['All consultations, discussions, and advice are free of charge.'],
+  },
+  {
+    q: 'What services do I offer above and beyond others?',
+    a: [
+      'Chicagoland and Northern Illinois market expertise (born and raised here).',
+      "Investor's knowledge at your disposal — personalized insight and guidance to drive top dollar.",
+      'Wide network of contractors that can assist in any renovations at great prices.',
+      "24/7 communication — you can call, email, or text me at any time and I'll provide an immediate response.",
+    ],
+  },
+  {
+    q: 'What is my home worth?',
+    a: [
+      "Based on my investor and real estate knowledge we will aim for top dollar in selling your home. We can also look at minor renovations at minimal cost that can increase your home's value.",
+    ],
+  },
+  {
+    q: 'How do I prepare my home before I sell it?',
+    a: [
+      "That's where I come in! With my extensive history of rehabbing investment properties I can advise you on ways we can drive top dollar quickly and with minimal costs. I also have a large network of contractors that can assist with any renovation needs.",
+    ],
+  },
+  {
+    q: 'How long will it take to sell my home?',
+    a: [
+      'From the day you and I have our initial meeting to the day we sell your home, I would say approximately 45–60 days (25 days on market, 30 days for closing paperwork).',
+    ],
+  },
+];
+---
+
+<Base title="Selling | Joseph Alvarado Real Estate Agent and Investor">
+  <section class="section page-hero">
+    <div class="container">
+      <span class="kicker">Sellers</span>
+      <h1>Sell your property with confidence</h1>
+      <p class="lede">
+        Want to sell your house? I'll help you get the most out of your property.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container worth">
+      <div>
+        <span class="kicker">What is your home worth?</span>
+        <h2>Get your free comprehensive home report in minutes</h2>
+      </div>
+      <a class="btn btn-gold" href={LINKS.homeValue} target="_blank" rel="noopener">
+        Learn About Your Home's Value
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Reasons to sell with me</span>
+        <h2>I sell homes faster — and for more money</h2>
+      </div>
+      <div class="grid-2 stats">
+        {stats.map((s) => (
+          <div class="card stat">
+            <span class="stat-number">{s.number}</span>
+            <p>{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container faq-layout">
+      <div class="section-head">
+        <span class="kicker">Seller FAQs</span>
+        <h2>Questions, answered</h2>
+        <p class="lede">
+          I can help you sell your property quickly and for the best possible price.
+        </p>
+      </div>
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand />
+  <SubscribeBand />
+</Base>
+
+<style>
+  .page-hero {
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .worth {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .worth h2 {
+    max-width: 26ch;
+  }
+
+  .stats .stat {
+    padding: 1.8rem 1.7rem;
+  }
+
+  .stat p {
+    color: var(--muted);
+    margin-top: 0.7rem;
+  }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 1.4fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .faq-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

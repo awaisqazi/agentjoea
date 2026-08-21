@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SubscribeBand from '../components/SubscribeBand.astro';
+
+const reasons = [
+  {
+    title: 'I work fast',
+    text: "I don't mess around. Let's view properties and place strong offers to get you the house you want fast.",
+  },
+  {
+    title: 'Buy at the best price',
+    text: 'Leverage my investment negotiating experience to get the house you want at the best price.',
+  },
+  {
+    title: 'Optimize your home',
+    text: 'Access to my large network of contractors to immediately improve your home and increase value.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Is there a consultation fee?',
+    a: ['All consultations, discussions, and advice are free of charge.'],
+  },
+  {
+    q: 'What services are offered above and beyond others?',
+    a: [
+      'Chicagoland and Northern Illinois market expertise (born and raised here, and I invest here!).',
+      "Investor's knowledge at your disposal — get the best deals at the best price leveraging my data sources.",
+      'Wide network of banks/lenders to help with your financing questions (low credit score, low income — NO problem!).',
+      'Wide network of contractors that can assist in any renovations at great prices!',
+      "24/7 communication — you can call, email, or text me at any time and I'll provide an immediate response.",
+    ],
+  },
+  {
+    q: 'What are the steps in buying a home?',
+    a: [
+      '1. You and I will talk to understand your goals and expectations, and create a solid game plan.',
+      '2. You will need to get pre-approved by a bank/lender (I have a wide network of banks/lenders that can assist low credit/low income!).',
+      '3. Once we know your pre-approval price point, we can go house hunting!',
+    ],
+  },
+  {
+    q: 'How long will it take?',
+    a: [
+      'Depending on how quickly we find the right home for you, the process takes approximately 2–3 months.',
+    ],
+  },
+];
+---
+
+<Base title="Buying | Joseph Alvarado Real Estate Agent and Investor">
+  <section class="section page-hero">
+    <div class="container">
+      <span class="kicker">Buyers</span>
+      <h1>Looking to buy a home?</h1>
+      <p class="lede">
+        I've got you covered — just reach out and I'll guide you every step of the way.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <span class="kicker">Reasons to buy with me</span>
+        <h2>Your edge in the market</h2>
+      </div>
+      <div class="grid-3">
+        {reasons.map((r, i) => (
+          <div class="card reason">
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{r.title}</h3>
+            <p>{r.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-layout">
+      <div class="section-head">
+        <span class="kicker">Buyer FAQs</span>
+        <h2>Questions, answered</h2>
+        <p class="lede">
+          I can hold your hand through the process of finding and purchasing the perfect
+          property.
+        </p>
+      </div>
+      <FaqList items={faqs} />
+    </div>
+  </section>
+
+  <CtaBand />
+  <SubscribeBand />
+</Base>
+
+<style>
+  .page-hero {
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .reason {
+    padding: 1.8rem 1.7rem;
+  }
+
+  .reason .num {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .reason p {
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+
+  .faq-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) 1.4fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .faq-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

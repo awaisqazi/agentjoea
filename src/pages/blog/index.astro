@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import SubscribeBand from '../../components/SubscribeBand.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base title="Blog | Joseph Alvarado Real Estate Agent and Investor">
+  <section class="section page-hero">
+    <div class="container">
+      <span class="kicker">My thoughts</span>
+      <h1>Joe's Thoughts</h1>
+      <p class="lede">
+        Hear from someone who lives and breathes real estate. From tips on buying and selling
+        to investment strategies, I share my wealth of expertise and experience to help you
+        navigate the world of real estate and property management.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="grid-3">
+        {posts.map((post, i) => (
+          <PostCard entry={post} loading={i < 3 ? 'eager' : 'lazy'} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SubscribeBand />
+</Base>
+
+<style>
+  .page-hero {
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+</style>
