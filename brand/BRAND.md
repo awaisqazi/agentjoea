@@ -49,11 +49,23 @@ the dark vertical gradient with a *subtle* warm halo behind the focal point.
   stroke for tags (RENTAL / FLIPPED / AIRBNB property badges).
 - **Halo + grain:** always present, always subtle.
 
-## Logo & photos
+## Logos & photos
 
-- `src/assets/brand/logo.webp` — the gold JA monogram + wordmark (light text;
-  dark backgrounds only).
-- `src/assets/brand/portrait.png` — Joe's suit portrait. Primary human element.
+Two related identities share the kit:
+
+- **Joseph Alvarado (personal / realtor):** `src/assets/brand/logo.webp` — the
+  gold JA monogram + wordmark. Light text; dark backgrounds only.
+- **Alvarado Investments (investment company):** the gold roof mark.
+  - `roof-mark.png` — the mark alone (1300×440, transparent). Works on any
+    background; may be used as a large, low-opacity decorative motif.
+  - `alvarado-investments-light.png` — roof + white wordmark, for dark
+    backgrounds (1608×622).
+  - `alvarado-investments-dark.png` — roof + black wordmark, for light
+    backgrounds / print (1608×622).
+  Use the AI lockup on investment-focused pieces; the JA monogram on
+  realtor/personal pieces. Don't stack both at equal weight in one composition.
+- `src/assets/brand/portrait.png` — Joe's suit portrait, full-res 1254×1254.
+  Primary human element.
 - `src/assets/brand/brokers-logo.png` — Chicagoland Brokers. Include a
   "Powered by" credit on anything acting as an ad for brokerage services.
 - Property photos live in `src/assets/properties/<slug>/`.

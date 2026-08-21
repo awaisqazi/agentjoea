@@ -42,6 +42,10 @@ export const ASSETS = {
   portrait: path.join(HERE, "..", "src", "assets", "brand", "portrait.png"),
   brokers: path.join(HERE, "..", "src", "assets", "brand", "brokers-logo.png"),
   hero: path.join(HERE, "..", "src", "assets", "brand", "hero.jpg"),
+  // Alvarado Investments (the investment-company identity)
+  roofMark: path.join(HERE, "..", "src", "assets", "brand", "roof-mark.png"),
+  aiLight: path.join(HERE, "..", "src", "assets", "brand", "alvarado-investments-light.png"),
+  aiDark: path.join(HERE, "..", "src", "assets", "brand", "alvarado-investments-dark.png"),
 };
 
 // ---------------------------------------------------------------------------
