@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import CtaBand from '../components/CtaBand.astro';
 import SubscribeBand from '../components/SubscribeBand.astro';
+import Bookshelf from '../components/Bookshelf.astro';
 import portrait from '../assets/brand/portrait.png';
 import joeFamily from '../assets/about/joe-family.jpg';
 import joeKids from '../assets/about/joe-kids.jpg';
@@ -132,16 +133,7 @@ const books = [
         <span class="kicker">How I got started on my journey</span>
         <h2>Books that shaped the way I invest</h2>
       </div>
-      <div class="books">
-        {books.map((b) => (
-          <div class="card book-card">
-            <div class="book-cover">
-              <Image src={b.img} alt={b.alt} width={220} />
-            </div>
-            <p>{b.text}</p>
-          </div>
-        ))}
-      </div>
+      <Bookshelf books={books} />
     </div>
   </section>
 
@@ -185,35 +177,6 @@ const books = [
 
   .split p + p {
     margin-top: 1rem;
-  }
-
-  .books {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .book-card {
-    padding: 1.6rem;
-  }
-
-  .book-card .book-cover {
-    height: 190px;
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.2rem;
-  }
-
-  .book-card .book-cover :global(img) {
-    max-height: 190px;
-    width: auto;
-    border-radius: 6px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-  }
-
-  .book-card p {
-    color: var(--muted);
-    font-size: 0.93rem;
   }
 
   @media (max-width: 860px) {
